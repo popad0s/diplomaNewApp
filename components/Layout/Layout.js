@@ -22,6 +22,7 @@ import Icons from "../../pages/icons";
 import Charts from "../../pages/charts";
 import ChooseCampus from '../AddCampus/ChooseCampus';
 import AddCampus from '../AddCampus/AddCampus';
+import Error from '../../pages/error/Error';
 
 // context
 import { useLayoutState } from "../../context/LayoutContext";
@@ -60,6 +61,7 @@ function Layout(props) {
               <Route path="/app/ui/temperatures" component={Temperatures} />
               <Route path="/app/ui/counters" component={Counters} />
               <Route path="/app/ui/addcampus" component={AddCampus} />
+              <Route path="/app/ui/error" component={Error} />
             </Switch>
           </div>
         </>

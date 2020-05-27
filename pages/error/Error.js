@@ -6,18 +6,15 @@ import classnames from "classnames";
 // styles
 import useStyles from "./styles";
 
-// logo
-import logo from "./logo.svg";
-
 export default function Error() {
   var classes = useStyles();
 
   return (
     <Grid container className={classes.container}>
       <div className={classes.logotype}>
-        <img className={classes.logotypeIcon} src={logo} alt="logo" />
+        <img className={classes.logotypeIcon} src={'https://pngimage.net/wp-content/uploads/2018/06/logo-kpi-png-1.png'} alt="logo" />
         <Typography variant="h3" color="white" className={classes.logotypeText}>
-          Material Admin
+          Energy Manager KPI
         </Typography>
       </div>
       <Paper classes={{ root: classes.paperRoot }}>

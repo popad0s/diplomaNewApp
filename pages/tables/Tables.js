@@ -13,9 +13,9 @@ class Tables extends React.Component {
       super(props);
 
       this.state = {
-          items: [],
+          obj: {},
           isLoaded: false
-      }
+      };
 
   }
 
@@ -24,20 +24,23 @@ class Tables extends React.Component {
    *
    * Fetch json array of objects from given url and update state.
    */
+
   componentDidMount() {
 
-      fetch('https://f33b53db.ngrok.io/diplom/public/index.php/api/building/1?XDEBUG_SESSION=PHPSTORM', {
+    const URL = 'https://b1fe9331.ngrok.io';
+      fetch(URL+'/diplom/public/index.php/api/building/1', {
         method: 'GET',
-        mode:'no-cors',
-        headers: {
+        mode:'cors',
+        headers: new Headers ({
           'Accept' : 'application/json',
           'Content-Type' : ' application/json', 
           'Authorization': 'Bearer DgtaPv3ciCHVUqABVrha'
-        }})
+        })
+      })
           .then(res => res.json())
           .then(json => {
               this.setState({
-                  items: json,
+                  obj: json,
                   isLoaded: true, 
               })
           }).catch((err) => {
@@ -53,7 +56,7 @@ class Tables extends React.Component {
    */
   render() {
 
-      const { isLoaded, items } = this.state;
+      const { isLoaded, obj } = this.state;
 
       if (!isLoaded)
           return <div>Завантаження...</div>;
@@ -61,11 +64,10 @@ class Tables extends React.Component {
       return (
           <div className="App">
               <ul>
-                  {items.map(item => (
-                      <li key={item.id}>
-                          номер корпусу: {item.number} | загальна площа: {item.area} | кількість поверхів: {item.floors}| дата останнього ремонту: {item.repairingDate}
-                      </li>
-                  ))}
+                 
+                      <li obj={obj.id}>
+                          номер корпусу: {obj.number} | загальна площа: {obj.area} | кількість поверхів: {obj.floors_count}| дата останнього ремонту: {obj.last_renewal_year}
+                      </li>                
               </ul>
           </div>
       );
