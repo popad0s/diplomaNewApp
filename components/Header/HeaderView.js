@@ -24,6 +24,7 @@ import classNames from "classnames";
 import { Badge, Typography } from "../Wrappers";
 import Notification from "../Notification";
 import UserAvatar from "../UserAvatar";
+import API_URL from '../../pages/login/Login';
 
 const messages = [
   {
@@ -56,8 +57,29 @@ const messages = [
   }
 ];
 
+const logout = () => {
+  console.log(`some text`);
+  fetch(API_URL+'/diplom/public/index.php/logout', {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ' + window.localStorage.getItem('token'),
+    },
+}) /*end fetch */
+.then((data) => {
+  window.localStorage.removeItem('token');
+
+console.log(data.token);
+console.log(data);
+}); 
+};
+
 
 const Header = ({ classes, isSidebarOpened, toggleSidebar, ...props }) => (
+
+  
+
   <AppBar position="fixed" className={classes.appBar}>
     <Toolbar className={classes.toolbar}>
       <IconButton
@@ -123,19 +145,6 @@ const Header = ({ classes, isSidebarOpened, toggleSidebar, ...props }) => (
         classes={{ paper: classes.profileMenu }}
         disableAutoFocusItem
       >
-        <div className={classes.profileMenuUser}>
-          <Typography variant="h4" weight="medium">
-            John Smith
-          </Typography>
-          <Typography
-            className={classes.profileMenuLink}
-            component="a"
-            color="primary"
-            href="https://flatlogic.com"
-          >
-            Flalogic.com
-          </Typography>
-        </div>
         <MenuItem
           className={classNames(
             classes.profileMenuItem,
@@ -164,7 +173,7 @@ const Header = ({ classes, isSidebarOpened, toggleSidebar, ...props }) => (
           <Typography
             className={classes.profileMenuLink}
             color="primary"
-            onClick={props.signOut}
+            onClick={logout}
           >
             Sign Out
           </Typography>

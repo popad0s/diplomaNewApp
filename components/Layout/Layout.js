@@ -28,6 +28,8 @@ import Error from '../../pages/error/Error';
 import { useLayoutState } from "../../context/LayoutContext";
 import Temperatures from "../../pages/temperatures/Temperatures";
 import Counters from "../../pages/counters/Counters";
+// import EditUsersPanel from "../../pages/editUsers/EditUsersPanel";
+
 
 function Layout(props) {
   var classes = useStyles();
@@ -62,6 +64,7 @@ function Layout(props) {
               <Route path="/app/ui/counters" component={Counters} />
               <Route path="/app/ui/addcampus" component={AddCampus} />
               <Route path="/app/ui/error" component={Error} />
+              {/* <Route path="/app/ui/editpage" component={EditUsersPanel} /> */}
             </Switch>
           </div>
         </>

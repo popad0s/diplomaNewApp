@@ -18,22 +18,61 @@ import google from "../../images/google.svg";
 
 // context
 import { useUserDispatch, loginUser } from "../../context/UserContext";
-
-
+// import {API_URL} from './url';
 
 function Login(props) {
-  var classes = useStyles();
+  let classes = useStyles();
 
   // global
-  var userDispatch = useUserDispatch();
+  let userDispatch = useUserDispatch(); 
 
   // local
-  var [isLoading, setIsLoading] = useState(false);
-  var [error, setError] = useState(null);
-  var [activeTabId, setActiveTabId] = useState(0);
-  var [nameValue, setNameValue] = useState("");
-  var [loginValue, setLoginValue] = useState("");
-  var [passwordValue, setPasswordValue] = useState("");
+  let [isLoading, setIsLoading] = useState(false);
+  let [error, setError] = useState(null);
+  let [activeTabId, setActiveTabId] = useState(0);
+  let [nameValue, setNameValue] = useState("");
+  let [email, setEmail] = useState("");
+  let [password, setPassword] = useState("");
+  let [token, setToken] = useState('');
+  let [data, setData] = useState([]);
+
+
+  function fetchData(email, password) {
+           fetch('https://c6de8fa25c1c.ngrok.io/diplom/public/index.php/login', {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                 body: JSON.stringify({
+                    email: email,
+                    password: password,
+                })
+            }) /*end fetch */
+            .then(results => results.json())
+            .then((data) => {
+              (data.token!==undefined)? window.localStorage.setItem('token', data.token):console.log(`Error`);
+    
+        console.log(data.token);
+        console.log(data);
+      });
+     }
+    
+        
+    
+       const change = (e) => {
+            return setNameValue({
+                [e.target.name]: e.target.value
+            });
+        }; //end change
+    
+       const onSubmit = (e) =>{
+            fetchData(email, password);
+            e.preventDefault();
+            //console.log(this.state);
+            setEmail(email);
+            setPassword(password);
+            };
 
   return (
     <Grid container className={classes.container}>
@@ -80,8 +119,8 @@ function Login(props) {
                     input: classes.textField,
                   },
                 }}
-                value={loginValue}
-                onChange={e => setLoginValue(e.target.value)}
+                value={email}
+                onChange={e => setEmail(e.target.value)}
                 margin="normal"
                 placeholder="Email Adress"
                 type="email"
@@ -95,8 +134,8 @@ function Login(props) {
                     input: classes.textField,
                   },
                 }}
-                value={passwordValue}
-                onChange={e => setPasswordValue(e.target.value)}
+                value={password}
+                onChange={e => setPassword(e.target.value)}
                 margin="normal"
                 placeholder="Password"
                 type="password"
@@ -108,17 +147,19 @@ function Login(props) {
                 ) : (
                   <Button
                     disabled={
-                      loginValue.length === 0 || passwordValue.length === 0
+                      email.length === 0 || password.length === 0
                     }
-                    onClick={() =>
+                    onClick={(e) => {
+                      onSubmit(e);
                       loginUser(
                         userDispatch,
-                        loginValue,
-                        passwordValue,
+                        email,
+                        password,
                         props.history,
                         setIsLoading,
                         setError,
                       )
+                    }
                     }
                     variant="contained"
                     color="primary"
@@ -173,8 +214,8 @@ function Login(props) {
                     input: classes.textField,
                   },
                 }}
-                value={loginValue}
-                onChange={e => setLoginValue(e.target.value)}
+                value={email}
+                onChange={e => setEmail(e.target.value)}
                 margin="normal"
                 placeholder="Email Adress"
                 type="email"
@@ -188,8 +229,8 @@ function Login(props) {
                     input: classes.textField,
                   },
                 }}
-                value={passwordValue}
-                onChange={e => setPasswordValue(e.target.value)}
+                value={password}
+                onChange={e => setPassword(e.target.value)}
                 margin="normal"
                 placeholder="Password"
                 type="password"
@@ -200,19 +241,21 @@ function Login(props) {
                   <CircularProgress size={26} />
                 ) : (
                   <Button
-                    onClick={() =>
+                    onClick={(e) => {
+                      onSubmit(e);
                       loginUser(
                         userDispatch,
-                        loginValue,
-                        passwordValue,
+                        email,
+                        password,
                         props.history,
                         setIsLoading,
                         setError,
                       )
                     }
+                    }
                     disabled={
-                      loginValue.length === 0 ||
-                      passwordValue.length === 0 ||
+                      email.length === 0 ||
+                      password.length === 0 ||
                       nameValue.length === 0
                     }
                     size="large"
